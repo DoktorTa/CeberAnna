@@ -21,10 +21,11 @@ def command_requests_list(user_id_req: int, user_tag_req: str) -> str:
             all_requests += ch_requests.get_all_users()
             all_requests = tabulate.tabulate(all_requests)
 
-            # logger_inf.log(f'requests_list - {user_id_req} - {user_tag_req}')
+            logger_inf.info(msg=f'requests_list - {user_id_req} - {user_tag_req}')
+
             return f'{answer}`{all_requests}`'
     except Exception as e:
-        logger_err.log(e)
+        logger_err.error(e)
 
 
 def command_start(user_id_req: str, user_tag_req: str) -> str:
@@ -36,9 +37,10 @@ def command_start(user_id_req: str, user_tag_req: str) -> str:
                 user_tag='@' + user_tag_req
             )
 
-            backup_db()
+            logger_inf.info(msg=f'start - {user_id_req} - {user_tag_req}')
+            
             return 'Wait\n'
         else:
             return 'User exist\n'
     except Exception as e:
-        logger_err.log(e)
+        logger_err.error(e)

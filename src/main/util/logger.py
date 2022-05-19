@@ -7,7 +7,7 @@ def get_logger(name_logger: str, file: str) -> logging.Logger:
     )
 
     log = logging.getLogger(name=name_logger)
-    log.setLevel(logging.INFO)
+
     if not log.handlers:
         log.addHandler(logger_stream_handler(file, format_log_output))
     log.propagate = False
@@ -22,5 +22,11 @@ def logger_stream_handler(file: str, format_log_output: str) -> logging.Handler:
     return fh
 
 
-logger_error = get_logger('Error', r'logs_error')
-logger_info = get_logger('Info', r'logs_info')
+def conf_logging_level(level: int):
+    logging.basicConfig(level=level)
+
+
+logger_info = get_logger('Info', r'util/logs_info')
+logger_error = get_logger('Error', r'util/logs_error')
+
+
