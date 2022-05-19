@@ -9,6 +9,10 @@ def get_all_users() -> list:
     return db_requests.get_all_users()
 
 
+def clear_requests():
+    db_requests.clear_table()
+
+
 def create_user(user_id: str, user_tag: str):
     db_requests.create_user(user_id, user_tag)
 
