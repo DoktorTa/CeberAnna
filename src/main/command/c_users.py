@@ -1,5 +1,6 @@
 import logging
 
+import tabulate
 from command_heandler import ch_requests, ch_users
 from command_heandler.utils import *
 
@@ -15,15 +16,13 @@ def command_requests_list(user_id_req: int, user_tag_req: str) -> str:
     try:
         if True:  # if check_status(user_requester):
             answer = 'User tag in Telegram \n' \
-                     'Пользователи просят добавить их в группы:\n' \
-                     'user_tag | user_id\n'
+                     'Пользователи просят добавить их в группы:\n'
+            all_requests = [['user_tag', 'user_id']]
+            all_requests += ch_requests.get_all_users()
+            all_requests = tabulate.tabulate(all_requests)
 
-            all_requests: list = ch_requests.get_all_users()
-            for request in all_requests:
-                answer += request[0] + ' | ' + str(request[1]) + '\n'
-
-            logger_inf.log(f'requests_list - {user_id_req} - {user_tag_req}')
-            return answer
+            # logger_inf.log(f'requests_list - {user_id_req} - {user_tag_req}')
+            return f'{answer}`{all_requests}`'
     except Exception as e:
         logger_err.log(e)
 
