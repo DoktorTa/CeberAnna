@@ -1,3 +1,5 @@
 scr/main/db/back_up
 src/main/util/logs_info
 src/main/util/logs_error
+
+.pickle

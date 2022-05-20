@@ -7,7 +7,7 @@ def get_user_list() -> list:
     select = db_map.user_table.select().where()
     result = db_map.conn.execute(select)
     for row in result:
-        answer.append([row['user_tag'], row['user_name'], row['user_status', row['user_inviter']]])
+        answer.append([row['user_tag'], row['user_name'], row['user_id'], row['user_status'], row['user_inviter']])
     return answer
 
 
