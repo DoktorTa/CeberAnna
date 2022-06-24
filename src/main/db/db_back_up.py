@@ -5,7 +5,7 @@ from sqlalchemy.ext.serializer import loads, dumps
 from db import db_map
 
 db_for_backup = {
-    'requests_table': db_map.requests_table,
+    # 'requests_table': db_map.requests_table,
     'users_table': db_map.user_table}
 
 

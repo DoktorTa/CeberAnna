@@ -1,4 +1,7 @@
+from sqlalchemy.engine import LegacyCursorResult
+
 from db import db_map
+from util.user import User
 
 
 def get_user_list() -> list:
@@ -11,38 +14,38 @@ def get_user_list() -> list:
     return answer
 
 
-def get_user_by_id(user_id: str) -> (str, str, int, str):
+def get_user_by_id(user_id: int) -> User:
     select = db_map.user_table.select().where(
         db_map.user_table.c.user_id == user_id
     )
-    result = db_map.conn.execute(select)
-    if not result.all():
-        return None
-    return result['user_tag'], result['user_name'], result['user_status'], result['user_inviter']
+    result: LegacyCursorResult = db_map.conn.execute(select)
+    return User().init_db_user(result.mappings().first())
 
 
-def delete_user(user_id: str) -> None:
+def delete_user(user_id: int) -> None:
     delete_stm = db_map.user_table.delete().where(
         db_map.user_table.c.user_id == user_id)
     db_map.conn.execute(delete_stm)
 
 
-def create_user(user_id: int, user_tag: str, user_name: str, user_status: int, user_inviter: str) -> None:
+def create_user(user: User) -> None:
+
     insert_stm = db_map.user_table.insert().values(
-        user_id=user_id,
-        user_tag=user_tag,
-        user_name=user_name,
-        user_status=user_status,
-        user_inviter=user_inviter
+        user_id=user.id,
+        user_tag=user.tag,
+        user_name=user.full_name,
+        user_status=user.status,
+        chat_id=user.chat_id,
+        user_inviter=user.inviter
     )
     db_map.conn.execute(insert_stm)
 
 
-def update_user(user_id: str, user_name: str, user_status: int) -> None:
+def update_user(user: User) -> None:
     update_stm = db_map.user_table.update()\
-        .where(db_map.user_table.c.user_id == user_id)\
+        .where(db_map.user_table.c.user_id == user.id)\
         .values(
-        user_name=user_name,
-        user_status=user_status
+        user_name=user.full_name,
+        user_status=user.status
     )
     db_map.conn.execute(update_stm)
