@@ -1,3 +1,5 @@
+import enum
+
 from aiogram import types
 
 
@@ -10,14 +12,19 @@ class User:
     inviter: str = 'default'
     lang: str = 'ru'
 
+    all_status = {
+        1: 'ADMIN',
+        2: 'STORAGE',
+        3: 'PAX',
+        4: 'PRESS'
+    }
+
     def __str__(self):
-        return f'Id: {self.id}\n' \
-               f'Tag: {self.tag}\n' \
-               f'Name: {self.full_name}\n' \
-               f'Status: {self.status}\n' \
-               f'Lang: {self.lang}\n' \
-               f'Inviter: {self.inviter}\n' \
-               f'Chat: {self.chat_id}\n'
+        return f'{self.id}\n' \
+               f'{self.tag}\n' \
+               f'{self.full_name}\n' \
+               f'{self.all_status.get(int(self.status))}\n' \
+               f'{self.inviter}\n'
 
     def init_bot(self, msg: types.Message):
         try:
@@ -52,3 +59,9 @@ class User:
         except Exception as e:
             return None
 
+
+class Status(enum.Enum):
+    ADMIN = 1
+    STORAGE = 2
+    PAX = 3
+    PRESS = 4

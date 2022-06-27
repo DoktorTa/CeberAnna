@@ -1,4 +1,5 @@
 class MSGCommandUsersRU:
+    help = 'Добро пожаловать! Меня зовут Anna - я бот фестиваля STENOGRAFFIA \n'
     requests_users = 'Пользователи просят добавить их в группы:\n'
     wait = 'Ожидайте\n'
     user_exist = 'Пользователь существует\n'

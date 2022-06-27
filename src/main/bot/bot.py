@@ -11,25 +11,51 @@ from aiogram.types import ParseMode
 from aiogram.utils import executor
 from aiogram.utils.markdown import code
 
-
+import configuration
 from command_heandler.ch_requests import *
 from command_heandler.ch_users import *
-from command import c_users
+from command import c_users, c_help
 from util.user import User
 from states import *
 from db.db_back_up import backup_db
+from bot.keyboards import *
 
 BOT_TOKEN = os.getenv('BOT_TOKEN')
 bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher(bot, storage=MemoryStorage())
 users_com_group = c_users.CommandUsers(ChRequestsSQLite(), ChUserSQLite())
+help_command = c_help.CommandHelp()
+languages = configuration.languages
+
+from bot.service_navigation import *
 
 
 @dp.message_handler(commands=['start'])
 async def start_command(message: types.Message):
+    menu = None
     user_req: User = User().init_bot(message)
     text = users_com_group.command_start(user_req)
-    await message.reply(text)
+
+    if text == languages.get(user_req.lang).user_exist:
+        menu = get_main_menu_keyboard()
+
+    await message.reply(text, reply_markup=menu)
+
+
+# @dp.message_handler(commands=['help'])
+# async def help_command(message: types.Message):
+#     user_req: User = User().init_bot(message)
+#     text = help_command.command_help(user_req)
+#     await message.reply(text, parse_mode=ParseMode.MARKDOWN)
+#
+
+
+# @dp.message_handler(commands=['pax'])
+# async def pax_command(message: types.Message):
+#     user_req: User = User().init_bot(message)
+#     if True:
+#
+#     await message.reply(text, parse_mode=ParseMode.MARKDOWN)
 
 
 @dp.message_handler(commands=['requester_list'])

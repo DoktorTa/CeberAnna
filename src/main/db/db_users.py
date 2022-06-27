@@ -8,9 +8,11 @@ def get_user_list() -> list:
     answer = []
 
     select = db_map.user_table.select().where()
-    result = db_map.conn.execute(select)
-    for row in result:
-        answer.append([row['user_tag'], row['user_name'], row['user_id'], row['user_status'], row['user_inviter']])
+    result: LegacyCursorResult = db_map.conn.execute(select)
+    for row in result.mappings():
+        answer.append(User().init_db_user(row))
+        # answer.append([row['user_tag'], row['user_name'], row['user_id'], row['user_status'], row['user_inviter']])
+
     return answer
 
 

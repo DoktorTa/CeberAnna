@@ -8,6 +8,16 @@ from util.user import User
 
 
 class CommandUsers:
+    commands = [
+        (1, '/user_list'),
+        (1, '/requester_list'),
+        (1, '/requests_clear'),
+        (1, '/close_register'),
+        (1, '/add_user'),
+        (1, '/delete_user'),
+        (1, '/update_user'),
+        (1, '/find_user')
+    ]
     languages = {'ru': MSGCommandUsersRU(),
                  'en': MSGCommandUserEN()}
     logger_err = logger.logger_error
@@ -17,6 +27,19 @@ class CommandUsers:
     def __init__(self, abs_ch_requests: AbsChRequests, abs_ch_users: AbsChUsers):
         self.ch_requests: AbsChRequests = abs_ch_requests
         self.ch_users: AbsChUsers = abs_ch_users
+
+    def get_group_users_commands(self, user_req: User) -> list:
+        try:
+            group = []
+            user = self.ch_users.get_user_by_id(user_req.id)
+
+            for command in self.commands:
+                if command[0] >= int(user.status):
+                    group.append(command[1])
+
+            return group
+        except Exception as e:
+            self.logger_err.error(e)
 
     def command_requests_list(self, user_req: User) -> str:
         try:
@@ -31,6 +54,7 @@ class CommandUsers:
                 return f'{answer}`{all_requests}`'
         except Exception as e:
             self.logger_err.error(e)
+            return 'Error'
 
     def command_requests_clear(self, user_req: User) -> str:
         try:
@@ -41,6 +65,7 @@ class CommandUsers:
                 return answer
         except Exception as e:
             self.logger_err.error(e)
+            return 'Error'
 
     def command_start(self, user_req: User) -> str:
         try:
@@ -55,6 +80,7 @@ class CommandUsers:
             return self.languages.get(user_req.lang).user_exist
         except Exception as e:
             self.logger_err.error(e)
+            return 'Error'
 
     def command_close_register(self, user_req: User) -> str:
         try:
@@ -71,13 +97,14 @@ class CommandUsers:
                 return answer
         except Exception as e:
             self.logger_err.error(e)
+            return 'Error'
 
     def command_user_list(self, user_req: User) -> str:
         try:
             if True:  # if check_status(user_requester):
                 answer = self.languages.get(user_req.lang).users_list
                 all_requests = [['user_tag', 'user_name', 'user_id', 'user_status', 'user_inviter']]
-                all_requests += self.ch_users.get_all_users()
+                all_requests += [str(x).split('\n') for x in self.ch_users.get_all_users()]
                 all_requests = tabulate.tabulate(all_requests)
 
                 self.logger_inf.info(msg=f'user_list - {user_req.id} - {user_req.tag}')
@@ -85,6 +112,7 @@ class CommandUsers:
                 return f'{answer}`{all_requests}`'
         except Exception as e:
             self.logger_err.error(e)
+            return 'Error'
 
     def command_add_user_state_0(self, user_req: User) -> str:
         try:
@@ -95,6 +123,7 @@ class CommandUsers:
                 return answer
         except Exception as e:
             self.logger_err.error(e)
+            return 'Error'
 
     def command_add_user_state_1(self, user_req: User, msg_text: str) -> str:
         try:
@@ -113,6 +142,7 @@ class CommandUsers:
                     return answer
         except Exception as e:
             self.logger_err.error(e)
+            return 'Error'
 
     def command_del_user_state_0(self, user_req: User) -> str:
         try:
@@ -123,6 +153,7 @@ class CommandUsers:
                 return answer
         except Exception as e:
             self.logger_err.error(e)
+            return 'Error'
 
     def command_del_user_state_1(self, user_req: User, msg_text: str) -> str:
         try:
@@ -139,6 +170,7 @@ class CommandUsers:
                     return answer
         except Exception as e:
             self.logger_err.error(e)
+            return 'Error'
 
     def command_update_user_state_0(self, user_req: User) -> str:
         try:
@@ -149,6 +181,7 @@ class CommandUsers:
                 return answer
         except Exception as e:
             self.logger_err.error(e)
+            return 'Error'
 
     def command_update_user_state_1(self, user_req: User, msg_text: str) -> str:
         try:
@@ -171,4 +204,6 @@ class CommandUsers:
                     return answer
         except Exception as e:
             self.logger_err.error(e)
+            return 'Error'
+
 
