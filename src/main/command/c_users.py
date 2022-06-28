@@ -28,12 +28,12 @@ class CommandUsers:
         self.ch_requests: AbsChRequests = abs_ch_requests
         self.ch_users: AbsChUsers = abs_ch_users
 
-    def get_group_users_commands(self, user_req: User) -> list:
+    def get_group_users_commands(self, user_req: User, commands) -> list:
         try:
             group = []
             user = self.ch_users.get_user_by_id(user_req.id)
 
-            for command in self.commands:
+            for command in commands:
                 if command[0] >= int(user.status):
                     group.append(command[1])
 

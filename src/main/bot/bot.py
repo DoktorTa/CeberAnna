@@ -1,33 +1,29 @@
-import asyncio
-import datetime
-import logging
-import sys
 import os
 
-from aiogram import Bot, types
+from aiogram import Bot
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.dispatcher import Dispatcher, FSMContext
 from aiogram.types import ParseMode
 from aiogram.utils import executor
-from aiogram.utils.markdown import code
 
 import configuration
 from command_heandler.ch_requests import *
 from command_heandler.ch_users import *
-from command import c_users, c_help
-from util.user import User
-from states import *
-from db.db_back_up import backup_db
+from command_heandler.ch_storage import *
+from command import c_users, c_help, c_storage
+from bot.states import *
 from bot.keyboards import *
 
 BOT_TOKEN = os.getenv('BOT_TOKEN')
 bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher(bot, storage=MemoryStorage())
 users_com_group = c_users.CommandUsers(ChRequestsSQLite(), ChUserSQLite())
+storage_com_group = c_storage.CommandStorage(ChStorageSQLite())
 help_command = c_help.CommandHelp()
 languages = configuration.languages
 
 from bot.service_navigation import *
+from bot.storage import *
 
 
 @dp.message_handler(commands=['start'])

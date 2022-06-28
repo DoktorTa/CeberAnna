@@ -22,6 +22,13 @@ requests_table = Table('requests_table', metadata,
                        Column('user_id', Integer, primary_key=True),
                        )
 
+storage_table = Table('storage_table', metadata,
+                      Column('name_group', String),
+                      Column('name_subgroup', String),
+                      Column('name_id', String, primary_key=True),
+                      Column('count', Integer),
+                      )
+
 objects_name = Table('objects_name', metadata,
                      Column('objects_name', String))
 

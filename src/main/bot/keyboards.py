@@ -1,6 +1,7 @@
 from aiogram.types import KeyboardButton, ReplyKeyboardMarkup
 
 
+# TODO: Блять оно вообще используется?
 def get_main_menu_keyboard():
     btn = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
 
@@ -18,6 +19,7 @@ def get_main_menu_keyboard():
     return btn
 
 
+# TODO: Блять оно вообще используется?
 def get_pax_menu_keyboard():
     btn = ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
 
@@ -38,6 +40,7 @@ def get_pax_menu_keyboard():
     return btn
 
 
+# TODO: Мб это можно проше.
 def generate_keyboard_by_names(names_but: list, one_time_keyboard=True):
     if len(names_but) == 0:
         return None

@@ -58,10 +58,3 @@ class User:
             return self
         except Exception as e:
             return None
-
-
-class Status(enum.Enum):
-    ADMIN = 1
-    STORAGE = 2
-    PAX = 3
-    PRESS = 4

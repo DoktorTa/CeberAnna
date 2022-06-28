@@ -15,6 +15,17 @@ class MSGCommandUsersRU:
     user_del_good = 'Пользователь удален\n'
     user_update = 'Заполните форму:\nТэг из таблицы Новое имя Новый статус'
     user_update_good = 'Пользователь обновлен.\n'
+    create_item = 'Чтобы создать новый предмет отправте:\n' \
+                  'Название группы позиций Название подгруппы Номер в группе Количество,\n' \
+                  'Пример:\n' \
+                  'cans new_ARTON N170 5,\n' \
+                  'other STAIRS 7m 1,\n' \
+                  'paint PF-115 red 2'
+    create_item_good = 'create_item_good'
+    show_item_stage_0 = 'show_item_stage_0'
+    show_item_stage_1 = 'show_item_stage_1'
+    update_item = 'update_item_stage_0'
+    update_item_good = 'update_item_stage_1'
 
 
 class MSGCommandUserEN:
@@ -32,3 +43,15 @@ class MSGCommandUserEN:
     user_del = 'Выберите идентификатор из списка, чтобы удалить этого пользователя\n'
     user_del_good = 'Пользователь удален\n'
     user_update = 'Заполните форму:\nТэг из таблицы Новое имя Новый статус'
+    create_item = 'Чтобы создать новый предмет отправте:\n' \
+                  'Название группы позиций Название подгруппы Номер в группе Количество,\n' \
+                  'Пример:\n' \
+                  'cans new_ARTON N170 5,\n' \
+                  'other STAIRS 7m 1,\n' \
+                  'paint PF-115 red 2'
+    create_item_good = 'create_item_good'
+    show_item_stage_0 = 'show_item_stage_0'
+    show_item_stage_1 = 'show_item_stage_1'
+    update_item = 'update_item_stage_0'
+    update_item_good = 'update_item_stage_1'
+

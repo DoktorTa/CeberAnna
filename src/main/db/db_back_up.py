@@ -6,7 +6,8 @@ from db import db_map
 
 db_for_backup = {
     # 'requests_table': db_map.requests_table,
-    'users_table': db_map.user_table}
+    'users_table': db_map.user_table,
+    'storage_table': db_map.storage_table}
 
 
 def backup_db():
@@ -38,12 +39,14 @@ def load_backup(data=None):
             data_backup.update({key: data})
 
     for db_name, db_data in db_for_backup.items():
-        data = data_backup.get(db_name)
-        with open(f'db/back_up/{db_name}/{data}.pickle', 'rb') as file:
-            dump = file.read()
-        restore_q = loads(dump, db_data, db_map.session)
-        db_map.conn.execute(db_data.insert().values(*restore_q))
-        db_map.session.commit()
-
+        try:
+            data = data_backup.get(db_name)
+            with open(f'db/back_up/{db_name}/{data}.pickle', 'rb') as file:
+                dump = file.read()
+            restore_q = loads(dump, db_data, db_map.session)
+            db_map.conn.execute(db_data.insert().values(*restore_q))
+            db_map.session.commit()
+        except Exception as e:
+            continue
 
 
